@@ -7,15 +7,19 @@
  * Description: function that prints a string in reverse
  * Return: na
  */
-
 void print_rev(char *s)
 {
-	int i;
+	int i = 0;
 
-	for (i = 0; s[i] != '\0'; i++)
-		;
-	for (i = i - 1; i >= 0; i--)
-		_putchar([i]);
-
+	while (*(s + i) != '\0')
+	{
+		i++;
+	}
+	i -= 1;
+	while (i >= 0)
+	{
+		_putchar(s[i]);
+		i--;
+	};
 	_putchar('\n');
 }
