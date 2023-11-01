@@ -1,8 +1,0 @@
-#!/bin/bash
-
-# Delete object files
-rm -f *.o
-
-# Delete source files
-rm -f *.c
-
