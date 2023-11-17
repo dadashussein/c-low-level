@@ -54,5 +54,14 @@ char **strtow(char *str)
 	}
 
 	array[word_index] = NULL;
+
+	if (word_count == 0)
+	{
+		for (i = 0; i < word_index; i++)
+			free(array[i]);
+		free(array);
+		return (NULL);
+	}
+
 	return (array);
 }
