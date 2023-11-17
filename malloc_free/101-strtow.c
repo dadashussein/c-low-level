@@ -3,6 +3,23 @@
 #include <stdlib.h>
 #include <string.h>
 /**
+ * count_words - Counts the number of words in a string.
+ * @str: String to be counted.
+ * Return: The number of words in the string.
+ */
+int count_words(char *str)
+{
+	int i, count = 0;
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] != ' ' && (i == 0 || str[i - 1] == ' '))
+			count++;
+	}
+
+	return (count);
+}
+/**
  * strtow - Splits a string into an array of words.
  * @str: String to be splitted.
  *
@@ -17,19 +34,12 @@
 char **strtow(char *str)
 {
 	char **array;
-	int word_count = 0;
+	int word_count = count_words(str);
 	int word_index = 0;
 	int i, start, length;
 
 	if (str == NULL || strlen(str) == 0)
 		return (NULL);
-
-
-	for (i = 0; str[i] != '\0'; i++)
-	{
-		if (str[i] != ' ' && (i == 0 || str[i - 1] == ' '))
-			word_count++;
-	}
 
 	array = malloc((word_count + 1) * sizeof(char *));
 	if (array == NULL)
@@ -54,7 +64,6 @@ char **strtow(char *str)
 	}
 
 	array[word_index] = NULL;
-
 	if (word_count == 0)
 	{
 		for (i = 0; i < word_index; i++)
