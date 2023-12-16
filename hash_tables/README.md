@@ -30,3 +30,29 @@
 - Using a hashing function distributes keys evenly across the buckets, reducing the likelihood of collisions and improving search performance.
 - Separate chaining within each bucket allows for efficient insertion and deletion of key-value pairs without affecting other elements in the list.
 - The size of the hash table array impacts performance and collision frequency. A larger array reduces collisions but increases memory usage.
+
+## 4 - char *hash_table_get(const hash_table_t *ht, const char *key)
+
+This code defines the `hash_table_get` function, which retrieves the value associated with a specific key from a hash table. Here's a breakdown:
+
+**1. Argument Check and Initialization:**
+- The function takes two arguments:
+    - `ht`: Pointer to the hash table structure.
+    - `key`: Pointer to the key string you want to find.
+- It first checks if either argument is null and returns null if so.
+
+**2. Hash Index Calculation:**
+- It calls the `key_index` function (assumed to be defined elsewhere) with the key string and the hash table size to calculate the index in the hash table array where the key should be located.
+
+**3. Linked List Traversal:**
+- It assigns the first node in the linked list at the calculated index to `current`.
+- It enters a loop that continues as long as `current` is not null and the key comparison fails:
+    - Inside the loop, it compares the current node's key (`current->key`) with the provided key (`key`) using `strcmp`.
+    - If they match, the loop exits.
+    - Otherwise, it moves to the next node in the list by assigning `current->next` to `current`.
+
+**4. Value Retrieval and Return:**
+- After the loop:
+    - If `current` is null, it means the key was not found in the hash table, and the function returns null.
+    - Otherwise, the value associated with the key is stored in `current->value`.
+    - The function returns `current->value` as a pointer to the value string.
