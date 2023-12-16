@@ -1,4 +1,4 @@
-## 3 - int hash_table_set(hash_table_t *ht, const char *key, const char \*value)
+## 3 - `int hash_table_set(hash_table_t *ht, const char *key, const char \*value)`
 
 **1. Node Creation:**
 - The `create_node` function allocates memory for a new node structure, duplicates the provided key and value strings using `strdup`, and sets the `next` pointer to `NULL`. This function ensures proper memory management and independent copies of the key and value data.
@@ -30,8 +30,8 @@
 - Using a hashing function distributes keys evenly across the buckets, reducing the likelihood of collisions and improving search performance.
 - Separate chaining within each bucket allows for efficient insertion and deletion of key-value pairs without affecting other elements in the list.
 - The size of the hash table array impacts performance and collision frequency. A larger array reduces collisions but increases memory usage.
-
-## 4 - char *hash_table_get(const hash_table_t *ht, const char *key)
+-----------------------------------------------
+## 4 - `char *hash_table_get(const hash_table_t *ht, const char *key)`
 
 This code defines the `hash_table_get` function, which retrieves the value associated with a specific key from a hash table. Here's a breakdown:
 
@@ -56,3 +56,66 @@ This code defines the `hash_table_get` function, which retrieves the value assoc
     - If `current` is null, it means the key was not found in the hash table, and the function returns null.
     - Otherwise, the value associated with the key is stored in `current->value`.
     - The function returns `current->value` as a pointer to the value string.
+
+-------------------------------------------------------------------------
+## 5 -  `hash_table_print` 
+
+**1. Initialization and checks:**
+* It takes a `ht` pointer to the hash table structure as input.
+* It initializes variables:
+    * `i` for iterating through the hash table array.
+    * `current` for traversing the linked list within each bucket.
+    * `flag` to track whether any key-value pair has been printed already.
+* It checks for a null hash table and returns if that's the case.
+
+**2. Printing the opening brace:**
+* It prints an opening curly brace ("{") to indicate the start of the hash table representation.
+
+**3. Looping through the hash table array:**
+* It uses a loop to iterate through each element (bucket) in the hash table array (`ht->size` times).
+* For each bucket:
+    * It assigns the first node in the linked list (if any) to `current`.
+    * It enters a nested loop that continues as long as `current` is not null:
+        * Inside the nested loop:
+            * It checks the `flag` variable:
+                * If `flag` is 1 (meaning at least one key-value pair has been printed previously), it prints a comma and space (", ").
+                * This ensures proper separation between key-value pairs within the same bucket.
+            * It prints the key and value of the current node using `printf`:
+                * The key and value are enclosed in single quotes (' ').
+                * They are formatted with colon ("': '") separator.
+            * It sets `flag` to 1 to indicate that a key-value pair has been printed.
+            * It advances to the next node in the linked list by assigning `current->next` to `current`.
+
+**4. Printing the closing brace:**
+* After iterating through all buckets and their linked lists, it prints a closing curly brace ("}") to signify the end of the hash table representation.
+* It then adds a newline character ("\n") for formatting.
+
+----------------
+## 6 -  `hash_table_delete` 
+**1. Null check and initialization:**
+
+* It first checks if the provided `ht` pointer is NULL and returns if so, avoiding accessing invalid memory.
+* It initializes two variables:
+    * `i` to iterate through the hash table array.
+    * `current` to traverse the linked list within each bucket.
+    * `next` to temporarily store the next node for safe iteration.
+
+**2. Looping through the hash table array:**
+
+* It iterates through each element (bucket) in the hash table array using a loop with `ht->size` as the limit.
+* For each bucket:
+    * It assigns the first node in the linked list (if any) to `current`.
+
+**3. Freeing nodes within each bucket:**
+
+* It enters a nested loop that continues as long as `current` is not null.
+* Inside the nested loop:
+    * It saves the next node in the list using `current->next` and assigns it to `next`. This allows safe iteration without losing track of the next node.
+    * It frees the memory allocated for the current node's key and value using `free(current->key)` and `free(current->value)`.
+    * Finally, it frees the memory allocated for the entire current node itself using `free(current)`.
+    * It updates `current` to point to the next node saved in `next` to continue iterating through the list.
+
+**4. Freeing remaining memory:**
+
+* After iterating through all buckets and emptying their linked lists, it frees the memory allocated for the hash table array itself using `free(ht->array)`.
+* Finally, it frees the memory allocated for the entire hash table structure using `free(ht)`.
